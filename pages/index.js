@@ -5,10 +5,10 @@ import styles from '../styles/Home.module.css';
 export default function Home() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const images = [
-    'https://example.com/image1.jpg',
-    'https://example.com/image2.jpg',
-    'https://example.com/image3.jpg',
-    // Add more image URLs here
+    '/mug1.1.jpeg',
+    '/mug1.2.jpeg',
+    '/mug1.3.jpeg',
+    '/mug1.4.jpeg',
   ];
 
   const handleLeftArrowClick = () => {
