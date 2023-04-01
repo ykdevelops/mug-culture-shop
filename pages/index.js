@@ -31,12 +31,16 @@ export default function Home() {
   const cartItemsCount = cartItems.reduce((count, item) => count + item.quantity, 0);
 
   return (
-    <div>
-      <h1>Mug Culture Shop</h1>
-      <div className="cart-icon" style={{ position: 'absolute', top: '10px', right: '10px' }} onClick={() => setShowCart((prevState) => !prevState)}>
-        <BsBag />
-        {cartItemsCount > 0 && <span className="cart-count">{cartItemsCount}</span>}
+    <div className='home-page'>
+      <div className='cart-icon-row'>
+        <div onClick={() => setShowCart((prevState) => !prevState)}>
+          <BsBag className="cart-icon" />
+          {cartItemsCount > 0 && <span className="cart-count">{cartItemsCount}</span>}
+        </div>
       </div>
+      <h1>Mug Culture Shop</h1>
+
+
 
       {showCart && (
         <Cart
