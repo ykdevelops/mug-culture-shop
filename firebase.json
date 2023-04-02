@@ -1,10 +1,27 @@
 {
   "hosting": {
-    "public": "y",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
+    "public": "public",
+    "rewrites": [
+      {
+        "source": "**",
+        "function": "app"
+      }
+    ],
+    "headers": [
+      {
+        "source": "/_next/(.*)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          }
+        ]
+      }
     ]
+  },
+  "functions": {
+    "predeploy": ["npm run build"],
+    "source": "server.js",
+    "runtime": "nodejs14"
   }
 }

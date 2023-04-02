@@ -5,6 +5,22 @@ import { AiOutlineRightCircle } from 'react-icons/ai';
 import { MdKeyboardArrowUp } from 'react-icons/md';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import productModalStyles from '../../styles/productModal.module.css'
+import { motion } from 'framer-motion';
+const modalVariants = {
+    hidden: {
+        opacity: 0,
+        y: "-100vh"
+    },
+    visible: {
+        opacity: 1,
+        y: "0",
+        transition: {
+            type: "spring",
+            stiffness: 50,
+            damping: 8
+        }
+    }
+}
 const ProductModal = ({ product, closeModal }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isHighlightsExpanded, setIsHighlightsExpanded] = useState(false);
@@ -54,7 +70,9 @@ const ProductModal = ({ product, closeModal }) => {
         setIsShippingExpanded(!isShippingExpanded);
     };
     return (
-        <div className={productModalStyles.productModal}>
+        <motion.div className={productModalStyles.productModal} variants={modalVariants}
+            initial="hidden"
+            animate="visible">
             <div className={productModalStyles.container}>
                 <div className={productModalStyles.closeBtnRow}>
                     <button className={productModalStyles.closeBtn} onClick={handleCloseModal}>
@@ -122,7 +140,7 @@ const ProductModal = ({ product, closeModal }) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 };
 
