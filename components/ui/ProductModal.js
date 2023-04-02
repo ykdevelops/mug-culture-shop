@@ -30,9 +30,10 @@ const ProductModal = ({ product, closeModal }) => {
             addToCart(product, 1);
         }
         console.log('Cart before:', cart);
-        console.log('Cart after:', addToCart);
+        console.log('Cart after:', cart);
         closeModal();
     };
+
 
     const handleCloseModal = (event) => {
         event.stopPropagation();
