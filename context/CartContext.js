@@ -7,14 +7,7 @@ const CartProvider = ({ children }) => {
     const [isCheckingOut, setIsCheckingOut] = useState(false);
 
     const addToCart = (product, quantity) => {
-        const existingItemIndex = cart.findIndex((item) => item.product.id === product.id);
-        if (existingItemIndex !== -1) {
-            const updatedCart = [...cart];
-            updatedCart[existingItemIndex].quantity += quantity;
-            setCart(updatedCart);
-        } else {
-            setCart([...cart, { product, quantity }]);
-        }
+        setCart([...cart, { product, quantity }]);
     };
 
     const removeItem = (productId) => {
@@ -39,6 +32,8 @@ const CartProvider = ({ children }) => {
         setIsCheckingOut(false);
     };
 
+    const numberOfItems = cart.reduce((count, item) => count + item.quantity, 0);
+
     const total = cart.reduce(
         (total, item) => total + (item.product ? item.product.price * item.quantity : 0),
         0
@@ -54,8 +49,8 @@ const CartProvider = ({ children }) => {
                 isCheckingOut,
                 proceedToCheckout,
                 handleCheckout,
+                numberOfItems,
                 total,
-                setCart, // add setCart to the context
             }}
         >
             {children}
@@ -64,8 +59,17 @@ const CartProvider = ({ children }) => {
 };
 
 const useCart = () => {
-    const { cart, addToCart, removeItem, clearCart, isCheckingOut, proceedToCheckout, handleCheckout, total, setCart } =
-        useContext(CartContext);
+    const {
+        cart,
+        addToCart,
+        removeItem,
+        clearCart,
+        isCheckingOut,
+        proceedToCheckout,
+        handleCheckout,
+        numberOfItems,
+        total,
+    } = useContext(CartContext);
 
     return {
         cart,
@@ -75,8 +79,8 @@ const useCart = () => {
         isCheckingOut,
         proceedToCheckout,
         handleCheckout,
+        numberOfItems,
         total,
-        setCart, // return setCart from the hook
     };
 };
 

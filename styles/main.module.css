@@ -1,0 +1,48 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.homePage {
+  display: flex;
+  height: 100vh;
+  width: 100wv;
+  flex-direction: column;
+}
+.cartIconRow {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.cartIcon {
+  padding-right: 30px;
+  width: 60px;
+  height: 60px;
+}
+.title {
+  font-size: 50px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 100px;
+}
+.products {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+}
+.cartCount {
+  position: absolute;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: black;
+  transform: translate(5px, -40px);
+}

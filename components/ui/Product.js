@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ProductModal from './ProductModal';
-
+import productStyles from '../../styles/product.module.css';
 const Product = ({ product }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -17,7 +17,7 @@ const Product = ({ product }) => {
     }, [isModalOpen]);
 
     return (
-        <div className="product" onClick={openModal}>
+        <div className={productStyles.product} onClick={openModal}>
             <img src={product.images[0]} alt={product.name} />
             <h3>{product.name}</h3>
             <p>${product.price}</p>
