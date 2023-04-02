@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import StripeCheckout from 'react-stripe-checkout';
 
-const Checkout = ({ onCheckout }) => {
+const Checkout = ({ onCheckout, total }) => {
     const [userData, setUserData] = useState({
         name: '',
         email: '',
@@ -18,55 +19,16 @@ const Checkout = ({ onCheckout }) => {
         setPaymentOption(event.target.value);
     };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        onCheckout(userData, paymentOption);
+    const handleSubmit = (token) => {
+        onCheckout(userData, paymentOption, total, token);
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <div>
             <h2>Checkout</h2>
-            {/* User data form */}
-            <label>
-                Name:
-                <input name="name" value={userData.name} onChange={handleChange} />
-            </label>
-            <label>
-                Email:
-                <input name="email" value={userData.email} onChange={handleChange} type="email" />
-            </label>
-            <label>
-                Address:
-                <input name="address" value={userData.address} onChange={handleChange} />
-            </label>
 
-            {/* Payment options */}
-            <fieldset>
-                <legend>Payment Options</legend>
-                <label>
-                    <input
-                        type="radio"
-                        name="paymentOption"
-                        value="creditCard"
-                        checked={paymentOption === 'creditCard'}
-                        onChange={handlePaymentOptionChange}
-                    />
-                    Credit Card
-                </label>
-                <label>
-                    <input
-                        type="radio"
-                        name="paymentOption"
-                        value="paypal"
-                        checked={paymentOption === 'paypal'}
-                        onChange={handlePaymentOptionChange}
-                    />
-                    PayPal
-                </label>
-            </fieldset>
 
-            <button type="submit">Submit</button>
-        </form>
+        </div>
     );
 };
 

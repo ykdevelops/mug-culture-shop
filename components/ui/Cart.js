@@ -3,6 +3,7 @@ import { useCart } from '../../context/CartContext';
 import Checkout from './Checkout';
 import { MdClose } from 'react-icons/md';
 import cartStyles from '../../styles/cart.module.css';
+import StripeCheckout from 'react-stripe-checkout';
 
 const Cart = ({ onClose }) => {
     const { cart, isCheckingOut, proceedToCheckout, handleCheckout, clearCart, removeItem } = useCart();
@@ -49,17 +50,13 @@ const Cart = ({ onClose }) => {
                             ))}
                         </ul>
                         <p>Total: ${total}</p>
-                        {!isCheckingOut ? (
-                            <button onClick={proceedToCheckout}>Checkout</button>
-                        ) : (
-                            <Checkout
-                                userData={userData}
-                                paymentOption={paymentOption}
-                                handleInputChange={handleInputChange}
-                                handlePaymentOptionChange={handlePaymentOptionChange}
-                                handleSubmit={handleSubmit}
-                            />
-                        )}
+                        <StripeCheckout
+                            name="Mug Shop"
+                            description="Custom Designed Ceramic Coffee Mugs"
+                            amount={total * 100} // Stripe requires the amount to be in cents
+                            token={handleSubmit}
+                            stripeKey={process.env.STRIPE_API_KEY}
+                        />
                     </>
                 )}
             </div>
