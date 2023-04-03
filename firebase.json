@@ -1,27 +1,13 @@
 {
   "hosting": {
-    "public": "public",
-    "rewrites": [
-      {
-        "source": "**",
-        "function": "app"
-      }
+    "source": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
     ],
-    "headers": [
-      {
-        "source": "/_next/(.*)",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "public, max-age=31536000, immutable"
-          }
-        ]
-      }
-    ]
-  },
-  "functions": {
-    "predeploy": ["npm run build"],
-    "source": "server.js",
-    "runtime": "nodejs14"
+    "frameworksBackend": {
+      "region": "us-central1"
+    }
   }
 }
