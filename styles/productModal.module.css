@@ -1,16 +1,24 @@
 /* ProductModal component styles */
 .productModal {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   z-index: 10;
+}
+.container {
+  height: 100vh;
+  width: 100vw;
+  padding: 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
 }
 .productDetails {
   display: flex;
@@ -46,17 +54,6 @@
   padding: 10px 20px;
   border-radius: 4px;
   margin: 0 5px;
-}
-.container {
-  height: 90vh;
-  width: 100vw;
-  padding: 0 0.5rem;
-  display: flex;
-  flex-direction: column;
-  border: solid black;
-  border-radius: 30px;
-  align-items: center;
-  background-color: white;
 }
 
 .visual {
@@ -135,4 +132,53 @@
 .arrowIcon {
   width: 40px;
   height: 40px;
+}
+@media screen and (max-width: 768px) {
+  .container {
+    height: 100%;
+    width: 100%;
+    padding: 0 0.5rem;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    z-index: 999;
+    position: fixed;
+    overflow: scroll;
+  }
+  .productDetails {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  .visual {
+    max-width: 900px;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .description {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 20px;
+    flex-grow: 1;
+  }
+  .closeBtn {
+    background-color: transparent;
+    border: none;
+    font-size: 1.5rem;
+    color: #fff;
+  }
+  .closeBtnRow {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    padding-top: 20px;
+  }
 }

@@ -6,6 +6,7 @@ import ProductModal from '../components/ui/ProductModal'; // Import the ProductM
 import products from '../data/products';
 import mainStyles from '../styles/main.module.css';
 import { useCart } from '../context/CartContext';
+import { AnimatePresence, motion } from 'framer-motion';
 export default function Home() {
   const [cartItems, setCartItems] = useState([]);
   const [showCart, setShowCart] = useState(false);
@@ -18,27 +19,40 @@ export default function Home() {
 
   return (
     <div className={mainStyles.homePage}>
-      <div className={mainStyles.cartIconRow}>
-        <div onClick={() => setShowCart((prevState) => !prevState)}>
-          <BsBag className={mainStyles.cartIcon} />
-          <span className={mainStyles.cartCount}>{numberOfItems}</span>
-        </div>
-      </div>
-      <h1 className={mainStyles.title}>Mug Culture Shop</h1>
 
-      {showCart && (
-        <Cart
+      <h1 className={mainStyles.title}>Mug Culture Shop</h1>
+      <div className={mainStyles.cartIconRow}>
+        <div className={mainStyles.cartIconMid}>
+          <div onClick={() => setShowCart((prevState) => !prevState)}>
+            <BsBag className={mainStyles.cartIcon} />
+            <span className={mainStyles.cartCount}>{numberOfItems}</span>
+          </div>
+        </div>
+
+      </div>
+
+      <AnimatePresence>
+
+      </AnimatePresence>
+      {showCart && <motion.div
+        key="modal"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      >        <Cart
           items={cartItems}
           onClose={() => setShowCart(false)}
-        />
-      )}
-      <div className={mainStyles.products}>
+        /></motion.div>
+
+      }
+      {!showCart && <div className={mainStyles.products}>
         {products.map((product) => (
           <Product key={product.id} product={product} >
-            <ProductModal product={product} setCart={setCartItems} />
           </Product>
         ))}
-      </div>
+      </div>}
+
+
     </div>
   );
 }
