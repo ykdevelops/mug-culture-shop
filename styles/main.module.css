@@ -35,7 +35,7 @@
   font-size: 15px;
   color: black;
   position: absolute;
-  transform: translate(9px, -19px);
+  transform: translate(0.7rem, -1.3rem);
 }
 .products {
   display: flex;
