@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import Product from '../components/ui/Product';
-import Cart from '../components/ui/Cart'; // Import the Cart component
 import { BsBag } from 'react-icons/bs';
 import ProductModal from '../components/ui/ProductModal'; // Import the ProductModal component
 import products from '../data/products';
 import mainStyles from '../styles/main.module.css';
 import { useCart } from '../context/CartContext';
 import { AnimatePresence, motion } from 'framer-motion';
+import Link from 'next/link';
 export default function Home() {
   const [cartItems, setCartItems] = useState([]);
   const [showCart, setShowCart] = useState(false);
@@ -23,11 +23,14 @@ export default function Home() {
       <h1 className={mainStyles.title}>Mug Culture Shop</h1>
       <div className={mainStyles.cartIconRow}>
         <div className={mainStyles.cartIconMid}>
-          <div onClick={() => setShowCart((prevState) => !prevState)}>
-            <motion.div
+          <div >
+            <Link href="/cart">
+              <motion.div
 
-              whileHover={{ scale: 1.1 }}
-            ><BsBag className={mainStyles.cartIcon} /></motion.div>
+                whileHover={{ scale: 1.1 }}
+              ><BsBag className={mainStyles.cartIcon} /></motion.div>
+            </Link>
+
 
 
             <span className={mainStyles.cartCount}>{numberOfItems}</span>
@@ -37,7 +40,7 @@ export default function Home() {
       </div>
 
 
-      {showCart && <motion.div
+      {/* <motion.div
         key="modal"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -45,17 +48,17 @@ export default function Home() {
       >        <Cart
           items={cartItems}
           onClose={() => setShowCart(false)}
-        /></motion.div>
+        /></motion.div> */}
 
-      }
-      {!showCart && <div className={mainStyles.products}>
+
+      <div className={mainStyles.products}>
         {products.map((product) => (
 
           <Product key={product.id} product={product} >
           </Product>
 
         ))}
-      </div>}
+      </div>
 
 
     </div>
