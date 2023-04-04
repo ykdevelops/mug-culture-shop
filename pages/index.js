@@ -36,9 +36,7 @@ export default function Home() {
 
       </div>
 
-      <AnimatePresence>
 
-      </AnimatePresence>
       {showCart && <motion.div
         key="modal"
         initial={{ opacity: 0 }}
@@ -52,11 +50,9 @@ export default function Home() {
       }
       {!showCart && <div className={mainStyles.products}>
         {products.map((product) => (
-          <motion.div
 
-            whileHover={{ scale: 1.1 }}
-          >          <Product key={product.id} product={product} >
-            </Product></motion.div>
+          <Product key={product.id} product={product} >
+          </Product>
 
         ))}
       </div>}
