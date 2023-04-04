@@ -30,7 +30,6 @@
   background-color: transparent;
   border: none;
   font-size: 1.5rem;
-  color: #fff;
 }
 .closeBtnRow {
   display: flex;
@@ -173,7 +172,6 @@
     background-color: transparent;
     border: none;
     font-size: 1.5rem;
-    color: #fff;
   }
   .closeBtnRow {
     display: flex;

@@ -1,32 +1,34 @@
 import React, { useState } from 'react';
 import { useCart } from '../../context/CartContext';
-import { AiOutlineLeftCircle } from 'react-icons/ai';
-import { AiOutlineRightCircle } from 'react-icons/ai';
+import { AiOutlineLeft } from 'react-icons/ai';
+import { AiOutlineRight } from 'react-icons/ai';
+import { AiOutlineClose } from 'react-icons/ai';
 import { MdKeyboardArrowUp } from 'react-icons/md';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
-import productModalStyles from '../../styles/productModal.module.css'
+import productModalStyles from '../../styles/productModal.module.css';
 import { AnimatePresence, motion } from 'framer-motion';
+
 const modalVariants = {
     hidden: {
         opacity: 0,
-        x: "-100vw"
+        x: '-100vw',
     },
     visible: {
         opacity: 1,
         x: 0,
         transition: {
-            type: "spring",
+            type: 'spring',
             stiffness: 150,
-            damping: 10
-        }
+            damping: 10,
+        },
     },
     exit: {
         opacity: 0,
-        x: "-100vw",
+        x: '-100vw',
         transition: {
-            ease: "easeInOut"
-        }
-    }
+            ease: 'easeInOut',
+        },
+    },
 };
 
 const ProductModal = ({ product, closeModal }) => {
@@ -34,19 +36,35 @@ const ProductModal = ({ product, closeModal }) => {
     const [isHighlightsExpanded, setIsHighlightsExpanded] = useState(false);
     const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
     const [isShippingExpanded, setIsShippingExpanded] = useState(false);
-    const { cart, addToCart, removeItem, clearCart, isCheckingOut, proceedToCheckout, handleCheckout, total, setCart } = useCart();
+    const {
+        cart,
+        addToCart,
+        removeItem,
+        clearCart,
+        isCheckingOut,
+        proceedToCheckout,
+        handleCheckout,
+        total,
+        setCart,
+    } = useCart();
 
     const prevImage = () => {
-        setCurrentImageIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : product.images.length - 1));
+        setCurrentImageIndex((prevIndex) =>
+            prevIndex > 0 ? prevIndex - 1 : product.images.length - 1
+        );
     };
 
     const nextImage = () => {
-        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % product.images.length);
+        setCurrentImageIndex((prevIndex) =>
+            (prevIndex + 1) % product.images.length
+        );
     };
 
     const handleAddToCart = (event) => {
         event.stopPropagation();
-        const existingItemIndex = cart.findIndex((item) => item.product.id === product.id);
+        const existingItemIndex = cart.findIndex(
+            (item) => item.product.id === product.id
+        );
         if (existingItemIndex !== -1) {
             const updatedCart = [...cart];
             updatedCart[existingItemIndex].quantity += 1;
@@ -61,7 +79,7 @@ const ProductModal = ({ product, closeModal }) => {
 
     const handleCloseModal = (event) => {
         event.stopPropagation();
-        console.log("close button triggered")
+        console.log('close button triggered');
         closeModal();
     };
 
@@ -76,27 +94,65 @@ const ProductModal = ({ product, closeModal }) => {
     const handleShippingClick = () => {
         setIsShippingExpanded(!isShippingExpanded);
     };
+    const arrowVariants = {
+        hover: { scale: 1.2 },
+        tap: { scale: 0.8 },
+    };
+    const imageVariants = {
+        hidden: { x: "-100vw" },
+        visible: {
+            x: 0,
+            transition: {
+                type: "spring",
+                stiffness: 150,
+                damping: 10
+            }
+        },
+        exit: {
+            x: "-100vw",
+            transition: {
+                ease: "easeInOut"
+            }
+        }
+    };
+
+    const buttonVariants = {
+        hover: {
+            scale: 1.5,
+        },
+        pressed: {
+            scale: 0.5,
+        },
+        rest: {
+            scale: 1,
+        },
+    };
+
     return (
-        <div className={productModalStyles.productModal} variants={modalVariants}
-            initial="hidden"
-            animate="visible">
+        <div className={productModalStyles.productModal} variants={modalVariants} initial="hidden" animate="visible">
             <div className={productModalStyles.container}>
                 <div className={productModalStyles.closeBtnRow}>
-                    <button className={productModalStyles.closeBtn} onClick={handleCloseModal}>
-                        X
-                    </button>
+                    <motion.button
+                        initial="rest"
+                        whileHover="hover"
+                        whileTap="pressed"
+                        variants={buttonVariants}
+                        onClick={handleCloseModal}
+                    >
+                        <AiOutlineClose />
+                    </motion.button>
                 </div>
                 <div className={productModalStyles.productDetails}>
                     <div className={productModalStyles.visual}>
-                        <div className={productModalStyles.leftArrowColumn} onClick={prevImage}>
-                            <AiOutlineLeftCircle className={productModalStyles.arrowIcon} />
-                        </div>
-                        <div className={productModalStyles.photo}>
+                        <motion.div className={productModalStyles.leftArrowColumn} onClick={prevImage} variants={arrowVariants} whileHover="hover" whileTap="tap">
+                            <AiOutlineLeft className={productModalStyles.arrowIcon} />
+                        </motion.div>
+                        <motion.div className={productModalStyles.photo} variants={imageVariants} initial="hidden" animate="visible">
                             <img src={product.images[currentImageIndex]} alt={product.name} />
-                        </div>
-                        <div className={productModalStyles.rightArrowColumn} onClick={nextImage}>
-                            <AiOutlineRightCircle className={productModalStyles.arrowIcon} />
-                        </div>
+                        </motion.div>
+                        <motion.div className={productModalStyles.rightArrowColumn} onClick={nextImage} variants={arrowVariants} whileHover="hover" whileTap="tap">
+                            <AiOutlineRight className={productModalStyles.arrowIcon} />
+                        </motion.div>
                     </div>
                     <div className={productModalStyles.description}>
                         <h2>{product.name}</h2>
@@ -121,9 +177,7 @@ const ProductModal = ({ product, closeModal }) => {
                         {isDescriptionExpanded && (
                             <div className={productModalStyles.descriptionContent}>
                                 <p>
-                                    This custom-designed coffee mug features a cute cat taking a coffee break. It has an 11oz capacity and is
-                                    made of high-quality ceramic material that is both dishwasher and microwave safe. The mug has a glossy white
-                                    finish and is perfect for coffee lovers and cat enthusiasts alike.
+                                    This custom-designed coffee mug features a cute cat taking a coffee break. It has an 11oz capacity and is made of high-quality ceramic material that is both dishwasher and microwave safe. The mug has a glossy white finish and is perfect for coffee lovers and cat enthusiasts alike.
                                 </p>
                             </div>
                         )}
@@ -134,13 +188,11 @@ const ProductModal = ({ product, closeModal }) => {
                             <div className={productModalStyles.shippingContent}>
                                 <h3>Shipping Policy</h3>
                                 <p>
-                                    We offer free shipping on all orders. Your order will be processed within 1-2 business days and will be
-                                    delivered within 5-7 business days.
+                                    We offer free shipping on all orders. Your order will be processed within 1-2 business days and will be delivered within 5-7 business days.
                                 </p>
                                 <h3>Return Policy</h3>
                                 <p>
-                                    If you are not satisfied with your purchase, you may return it within 30 days for a full refund. Please
-                                    contact us to initiate a return.
+                                    If you are not satisfied with your purchase, you may return it within 30 days for a full refund. Please contact us to initiate a return.
                                 </p>
                             </div>
                         )}
@@ -149,6 +201,7 @@ const ProductModal = ({ product, closeModal }) => {
             </div>
         </div>
     );
+
 };
 
 export default ProductModal;
