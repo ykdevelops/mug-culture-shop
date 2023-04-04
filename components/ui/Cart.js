@@ -35,7 +35,7 @@ const Cart = ({ onClose }) => {
                     <button className={cartStyles.closeBtn} onClick={onClose}><MdClose /></button>
                 </div>
                 <div className={cartStyles.cartHeader}>
-                    <h2>Your Cart</h2>
+                    Your Cart
                 </div>
                 {cart.length === 0 ? (
                     <p>Your cart is empty.</p>
@@ -45,18 +45,18 @@ const Cart = ({ onClose }) => {
                             {cart.map((item) => (
                                 <li key={item.product.id}>
                                     {item.product.name} - ${item.product.price} x {item.quantity}
-                                    <button onClick={() => removeItem(item.product.id)}>Remove</button>
+                                    <button className={cartStyles.removeButton} onClick={() => removeItem(item.product.id)}>Remove</button>
                                 </li>
                             ))}
                         </ul>
-                        <p>Total: ${total}</p>
-                        <StripeCheckout
+                        <div className={cartStyles.totalCosts}>Total: ${total}</div>
+                        {/* <StripeCheckout
                             name="Mug Shop"
                             description="Custom Designed Ceramic Coffee Mugs"
                             amount={total * 100} // Stripe requires the amount to be in cents
                             token={handleSubmit}
                             stripeKey={process.env.STRIPE_API_KEY}
-                        />
+                        /> */}
                     </>
                 )}
             </div>

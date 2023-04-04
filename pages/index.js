@@ -24,7 +24,12 @@ export default function Home() {
       <div className={mainStyles.cartIconRow}>
         <div className={mainStyles.cartIconMid}>
           <div onClick={() => setShowCart((prevState) => !prevState)}>
-            <BsBag className={mainStyles.cartIcon} />
+            <motion.div
+
+              whileHover={{ scale: 1.1 }}
+            ><BsBag className={mainStyles.cartIcon} /></motion.div>
+
+
             <span className={mainStyles.cartCount}>{numberOfItems}</span>
           </div>
         </div>
@@ -47,8 +52,12 @@ export default function Home() {
       }
       {!showCart && <div className={mainStyles.products}>
         {products.map((product) => (
-          <Product key={product.id} product={product} >
-          </Product>
+          <motion.div
+
+            whileHover={{ scale: 1.1 }}
+          >          <Product key={product.id} product={product} >
+            </Product></motion.div>
+
         ))}
       </div>}
 
