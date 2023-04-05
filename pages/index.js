@@ -19,26 +19,19 @@ export default function Home() {
   return (
     <div className={mainStyles.homePage}>
 
-      <h1 className={mainStyles.title}>Mug Culture Shop</h1>
       <div className={mainStyles.cartIconRow}>
         <div className={mainStyles.cartIconMid}>
+          <img src="/images/mugculturelogo.png" alt="mugculturelogo" className={mainStyles.shopLogo} />
           <div >
             <Link href="/cart">
               <motion.div
-
                 whileHover={{ scale: 1.1 }}
               ><BsBag className={mainStyles.cartIcon} /></motion.div>
             </Link>
-
-
-
             <span className={mainStyles.cartCount}>{numberOfItems}</span>
           </div>
         </div>
-
       </div>
-
-
       {/* <motion.div
         key="modal"
         initial={{ opacity: 0 }}
