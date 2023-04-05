@@ -75,7 +75,7 @@ const product = () => {
         }
 
         console.log('Cart:', cart);
-        closeModal();
+        router.back();
     };
 
     const handleCloseModal = (event) => {
