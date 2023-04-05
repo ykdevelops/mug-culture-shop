@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-import Product from '../components/ui/Product';
+import ProductCard from '../components/ui/ProductCard';
 import { BsBag } from 'react-icons/bs';
-import ProductModal from '../components/ui/ProductModal'; // Import the ProductModal component
 import products from '../data/products';
 import mainStyles from '../styles/main.module.css';
 import { useCart } from '../context/CartContext';
@@ -54,8 +53,8 @@ export default function Home() {
       <div className={mainStyles.products}>
         {products.map((product) => (
 
-          <Product key={product.id} product={product} >
-          </Product>
+          <ProductCard key={product.id} product={product} >
+          </ProductCard>
 
         ))}
       </div>

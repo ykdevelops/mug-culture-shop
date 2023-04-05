@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { useCart } from '../../context/CartContext';
+import { useCart } from '../context/CartContext';
 import { AiOutlineLeft } from 'react-icons/ai';
 import { AiOutlineRight } from 'react-icons/ai';
 import { AiOutlineClose } from 'react-icons/ai';
 import { MdKeyboardArrowUp } from 'react-icons/md';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
-import productModalStyles from '../../styles/productModal.module.css';
+import productModalStyles from '../styles/productModal.module.css';
 import { AnimatePresence, motion } from 'framer-motion';
-
+import { useRouter } from 'next/router';
+import products from '../data/products';
 const modalVariants = {
     hidden: {
         opacity: 0,
@@ -31,7 +32,7 @@ const modalVariants = {
     },
 };
 
-const ProductModal = ({ product, closeModal }) => {
+const product = () => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isHighlightsExpanded, setIsHighlightsExpanded] = useState(false);
     const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
@@ -118,7 +119,7 @@ const ProductModal = ({ product, closeModal }) => {
 
     const buttonVariants = {
         hover: {
-            scale: 1.5,
+            scale: 1.1,
         },
         pressed: {
             scale: 0.5,
@@ -127,17 +128,27 @@ const ProductModal = ({ product, closeModal }) => {
             scale: 1,
         },
     };
+    const router = useRouter();
+    const { productId } = router.query;
+    const product = products.find((product) => product.id === parseInt(productId));
+
+    if (!product) {
+        return <div>Product not found</div>;
+    }
+
 
     return (
         <div className={productModalStyles.productModal} variants={modalVariants} initial="hidden" animate="visible">
             <div className={productModalStyles.container}>
                 <div className={productModalStyles.closeBtnRow}>
+
                     <motion.button
                         initial="rest"
                         whileHover="hover"
                         whileTap="pressed"
                         variants={buttonVariants}
-                        onClick={handleCloseModal}
+                        onClick={() => { router.back(); }}
+                        className={productModalStyles.closeBtn}
                     >
                         <AiOutlineClose />
                     </motion.button>
@@ -158,7 +169,14 @@ const ProductModal = ({ product, closeModal }) => {
                         <h2>{product.name}</h2>
                         <p>${product.price}</p>
                         <p>Custom Designed Ceramic Coffee Mug | Cat, Coffee Break | 11oz Gloss White Mug </p>
-                        <button onClick={handleAddToCart}>Add to Cart</button>
+                        <motion.button
+                            initial="rest"
+                            whileHover="hover"
+                            whileTap="pressed"
+                            variants={buttonVariants}
+                            onClick={handleAddToCart}
+                        >Add to Cart</motion.button>
+
                         <div className={productModalStyles.highlights} onClick={handleHighlightsClick}>
                             Highlights {isHighlightsExpanded ? <MdKeyboardArrowUp /> : <MdOutlineKeyboardArrowDown />}
                         </div>
@@ -204,4 +222,4 @@ const ProductModal = ({ product, closeModal }) => {
 
 };
 
-export default ProductModal;
+export default product;

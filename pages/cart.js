@@ -3,7 +3,7 @@ import { useCart } from '../context/CartContext';
 import { MdClose } from 'react-icons/md';
 import cartStyles from '../styles/cart.module.css';
 import { useRouter } from 'next/router';
-const cartPage = ({ onClose }) => {
+const cart = ({ onClose }) => {
     const { cart, isCheckingOut, proceedToCheckout, handleCheckout, clearCart, removeItem } = useCart();
     const [userData, setUserData] = useState({});
     const [paymentOption, setPaymentOption] = useState('paypal');
@@ -63,4 +63,4 @@ const cartPage = ({ onClose }) => {
     );
 };
 
-export default cartPage;
+export default cart;
