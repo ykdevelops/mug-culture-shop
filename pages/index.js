@@ -18,31 +18,17 @@ export default function Home() {
 
   return (
     <div className={mainStyles.homePage}>
-
-      <div className={mainStyles.cartIconRow}>
-        <div className={mainStyles.cartIconMid}>
-          <img src="/images/mugculturelogo.png" alt="mugculturelogo" className={mainStyles.shopLogo} />
+      <div className={mainStyles.headerRow}>
+        <div className={mainStyles.headerRowMid}>
+          <img src="/images/logo.png" alt="mugculturelogo" className={mainStyles.shopLogo} />
           <div >
             <Link href="/cart">
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-              ><BsBag className={mainStyles.cartIcon} /></motion.div>
+              <BsBag className={mainStyles.cartIcon} />
             </Link>
             <span className={mainStyles.cartCount}>{numberOfItems}</span>
           </div>
         </div>
       </div>
-      {/* <motion.div
-        key="modal"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-      >        <Cart
-          items={cartItems}
-          onClose={() => setShowCart(false)}
-        /></motion.div> */}
-
-
       <div className={mainStyles.products}>
         {products.map((product) => (
 

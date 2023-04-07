@@ -3,40 +3,120 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: transparent;
   padding: 20px;
   margin: 10px;
   border-radius: 4px;
   order: 1;
-  width: 30vw;
-  min-width: 300px;
-  max-width: 500px;
+  width: 300px;
+  height: 400px; /* Set a fixed height */
+  box-shadow: 0;
+  transition: background-color 0.3s ease-out, box-shadow 0.3s ease-out,
+    outline 0.3s ease-out;
+  overflow: hidden; /* Prevent content from overflowing the container */
 }
 
+.product:hover {
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+.product:focus {
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  outline: dotted 2px #ccc;
+}
+.product:focus-within img {
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-out;
+}
 .product img {
-  width: 100%;
+  width: 300px;
   height: auto;
   object-fit: cover;
   border-radius: 4px;
   margin-bottom: 15px;
+  transition: box-shadow 0.3s ease-out;
 }
-
 .name {
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: 1rem;
   color: #333;
   padding: 10px 0px 30px 0px;
+  white-space: wrap; /* Prevent line breaks in the name */
+  overflow: hidden; /* Hide the text that overflows the container */
+  text-overflow: ellipsis; /* Add ellipsis (...) when the text overflows */
+  width: 100%; /* Set the name width to 100% */
+  height: 300px;
 }
-
 .price {
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: 1.5rem;
   color: #333;
   margin-top: auto;
 }
-
 .product p {
   font-size: 1.1rem;
   color: #333;
   margin-bottom: 15px;
   width: 100%;
+}
+@media screen and (min-width: 1001px) {
+  .product {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background-color: transparent;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 4px;
+    order: 1;
+    width: 400px;
+    height: 500px; /* Set a fixed height */
+    box-shadow: 0;
+    transition: background-color 0.3s ease-out, box-shadow 0.3s ease-out,
+      outline 0.3s ease-out;
+    overflow: hidden; /* Prevent content from overflowing the container */
+  }
+
+  .product:hover {
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+  .product:focus {
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    outline: dotted 2px #ccc;
+  }
+  .product:focus-within img {
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-out;
+  }
+  .product img {
+    width: 400px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    transition: box-shadow 0.3s ease-out;
+  }
+  .name {
+    font-size: 1.2rem;
+    color: #333;
+    padding: 10px 0px 30px 0px;
+    white-space: wrap; /* Prevent line breaks in the name */
+    overflow: hidden; /* Hide the text that overflows the container */
+    text-overflow: ellipsis; /* Add ellipsis (...) when the text overflows */
+    width: 100%; /* Set the name width to 100% */
+    height: 300px;
+  }
+  .price {
+    font-size: 1.5rem;
+    color: #333;
+    margin-top: auto;
+  }
+  .product p {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 15px;
+    width: 100%;
+  }
 }
