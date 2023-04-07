@@ -128,6 +128,23 @@ const product = () => {
             scale: 1,
         },
     };
+    const expandVariants = {
+        hidden: { height: 0, opacity: 0 },
+        visible: {
+            height: 'auto',
+            opacity: 1,
+            transition: {
+                duration: 0.3,
+            },
+        },
+        exit: {
+            height: 0,
+            opacity: 0,
+            transition: {
+                duration: 0.3,
+            },
+        },
+    };
     const router = useRouter();
     const { productId } = router.query;
     const product = products.find((product) => product.id === parseInt(productId));
@@ -177,43 +194,51 @@ const product = () => {
                             onClick={handleAddToCart}
                         >Add to Cart</motion.button>
 
-                        <div className={productModalStyles.highlights} onClick={handleHighlightsClick}>
+                        <div className={productModalStyles.extraTitle} onClick={handleHighlightsClick}>
                             Highlights {isHighlightsExpanded ? <MdKeyboardArrowUp /> : <MdOutlineKeyboardArrowDown />}
                         </div>
-                        {isHighlightsExpanded && (
-                            <div>
-                                <ul>
-                                    <li>High-quality ceramic material</li>
-                                    <li>Dishwasher and microwave safe</li>
-                                    <li>11oz capacity</li>
-                                </ul>
-                            </div>
-                        )}
-                        <div className={productModalStyles.descriptionTitle} onClick={handleDescriptionClick}>
+                        <motion.div initial="hidden" animate={isHighlightsExpanded ? 'visible' : 'hidden'} exit="exit" variants={expandVariants}>
+                            {isHighlightsExpanded && (
+                                <div>
+                                    <ul>
+                                        <li>High-quality ceramic material</li>
+                                        <li>Dishwasher and microwave safe</li>
+                                        <li>11oz capacity</li>
+                                    </ul>
+                                </div>
+                            )}
+                        </motion.div>
+
+                        <div className={productModalStyles.extraTitle} onClick={handleDescriptionClick}>
                             Description {isDescriptionExpanded ? <MdKeyboardArrowUp /> : <MdOutlineKeyboardArrowDown />}
                         </div>
-                        {isDescriptionExpanded && (
-                            <div className={productModalStyles.descriptionContent}>
-                                <p>
-                                    This custom-designed coffee mug features a cute cat taking a coffee break. It has an 11oz capacity and is made of high-quality ceramic material that is both dishwasher and microwave safe. The mug has a glossy white finish and is perfect for coffee lovers and cat enthusiasts alike.
-                                </p>
-                            </div>
-                        )}
-                        <div className={productModalStyles.shipping} onClick={handleShippingClick}>
+                        <motion.div initial="hidden" animate={isDescriptionExpanded ? 'visible' : 'hidden'} exit="exit" variants={expandVariants}>
+                            {isDescriptionExpanded && (
+                                <div className={productModalStyles.descriptionContent}>
+                                    <p>
+                                        This custom-designed coffee mug features a cute cat taking a coffee break. It has an 11oz capacity and is made of high-quality ceramic material that is both dishwasher and microwave safe. The mug has a glossy white finish and is perfect for coffee lovers and cat enthusiasts alike.
+                                    </p>
+                                </div>
+                            )}
+                        </motion.div>
+
+                        <div className={productModalStyles.extraTitle} onClick={handleShippingClick}>
                             Shipping and return policies {isShippingExpanded ? <MdKeyboardArrowUp /> : <MdOutlineKeyboardArrowDown />}
                         </div>
-                        {isShippingExpanded && (
-                            <div className={productModalStyles.shippingContent}>
-                                <h3>Shipping Policy</h3>
-                                <p>
-                                    We offer free shipping on all orders. Your order will be processed within 1-2 business days and will be delivered within 5-7 business days.
-                                </p>
-                                <h3>Return Policy</h3>
-                                <p>
-                                    If you are not satisfied with your purchase, you may return it within 30 days for a full refund. Please contact us to initiate a return.
-                                </p>
-                            </div>
-                        )}
+                        <motion.div initial="hidden" animate={isShippingExpanded ? 'visible' : 'hidden'} exit="exit" variants={expandVariants}>
+                            {isShippingExpanded && (
+                                <div className={productModalStyles.shippingContent}>
+                                    <h3>Shipping Policy</h3>
+                                    <p>
+                                        We offer free shipping on all orders. Your order will be processed within 1-2 business days and will be delivered within 5-7 business days.
+                                    </p>
+                                    <h3>Return Policy</h3>
+                                    <p>
+                                        If you are not satisfied with your purchase, you may return it within 30 days for a full refund. Please contact us to initiate a return.
+                                    </p>
+                                </div>
+                            )}
+                        </motion.div>
                     </div>
                 </div>
             </div>

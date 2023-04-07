@@ -132,6 +132,11 @@
   width: 40px;
   height: 40px;
 }
+.extraTitle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 @media screen and (max-width: 768px) {
   .container {
     height: 100%;
@@ -178,5 +183,10 @@
     width: 100%;
     justify-content: flex-end;
     padding-top: 20px;
+  }
+  .extraTitle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
   }
 }

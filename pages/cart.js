@@ -29,13 +29,13 @@ const cart = ({ onClose }) => {
     return (
         <div className={cartStyles.cart}>
             <div className={cartStyles.cartContainer}>
-                <div className={cartStyles.closeBtnRow}>
-
+                <div className={cartStyles.headerRow}>
+                    <div className={cartStyles.cartTitle}>
+                        Your Cart
+                    </div>
                     <button className={cartStyles.closeBtn} onClick={() => { router.back(); }}><MdClose /></button>
                 </div>
-                <div className={cartStyles.cartHeader}>
-                    Your Cart
-                </div>
+
                 {cart.length === 0 ? (
                     <p>Your cart is empty.</p>
                 ) : (
