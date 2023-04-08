@@ -8,6 +8,9 @@ const handle = app.getRequestHandler();
 app.prepare().then(() => {
     const server = express();
 
+    // Removed server.use(express.json());
+    // Removed server.post("/api/create-checkout-session", ...)
+
     server.get("*", (req, res) => {
         return handle(req, res);
     });
@@ -17,3 +20,4 @@ app.prepare().then(() => {
         console.log("> Ready on http://localhost:3000");
     });
 });
+
