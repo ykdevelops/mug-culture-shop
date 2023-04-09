@@ -184,7 +184,8 @@ const product = () => {
                         </div>
                         <motion.div className={productModalStyles.rightArrowColumn} onClick={nextImage} variants={arrowVariants} whileHover="hover" whileTap="tap">
                             <AiOutlineRight className={productModalStyles.arrowIcon} />
-                        </motion.div></div>
+                        </motion.div>
+                    </div>
 
 
 

@@ -39,7 +39,7 @@ const ProductCard = ({ product }) => {
                     onMouseEnter={handleHover}
                     onMouseLeave={handleMouseLeave}
                 >
-                    <img src={product.images[0]} alt={product.name} />
+                    <img src={product.thumbnail} alt={product.name} />
                     <span className={productStyles.name}>{product.name}</span>
                     <span className={productStyles.price}>${product.price}</span>
                 </motion.div>
