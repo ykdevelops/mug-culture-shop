@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
-import { useCart } from '../context/CartContext';
+import { useCart } from '../../context/CartContext';
 import { AiOutlineLeft } from 'react-icons/ai';
 import { AiOutlineRight } from 'react-icons/ai';
 import { AiOutlineClose } from 'react-icons/ai';
 import { MdKeyboardArrowUp } from 'react-icons/md';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
-import productModalStyles from '../styles/productModal.module.css';
+import productModalStyles from '../../styles/productModal.module.css';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
-import products from '../data/products';
-import ProductGallery from '../components/ui/ProductGallery'
-import ProductDetails from '../components/ui/ProductDetails'
+import products from '../../data/products';
+
 const modalVariants = {
     hidden: {
         opacity: 0,
@@ -34,7 +33,7 @@ const modalVariants = {
     },
 };
 
-const product = () => {
+const ProductDetails = () => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isHighlightsExpanded, setIsHighlightsExpanded] = useState(false);
     const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
@@ -151,35 +150,68 @@ const product = () => {
     const { productId } = router.query;
     const product = products.find((product) => product.id === parseInt(productId));
 
-    if (!product) {
-        return <div>Product not found</div>;
-    }
-
-
     return (
-        <div className={productModalStyles.productModal} variants={modalVariants} initial="hidden" animate="visible">
-            <div className={productModalStyles.container}>
-                <div className={productModalStyles.closeBtnRow}>
+        <div className={productModalStyles.description}>
+            <h2>{product.name}</h2>
+            <p>${product.price}</p>
+            <p>Custom Designed Ceramic Coffee Mug | Cat, Coffee Break | 11oz Gloss White Mug </p>
+            <motion.button
+                initial="rest"
+                whileHover="hover"
+                whileTap="pressed"
+                variants={buttonVariants}
+                onClick={handleAddToCart}
+                className={productModalStyles.addToCart}
+            >Add to Cart</motion.button>
 
-                    <motion.button
-                        initial="rest"
-                        whileHover="hover"
-                        whileTap="pressed"
-                        variants={buttonVariants}
-                        onClick={() => { router.back(); }}
-                        className={productModalStyles.closeBtn}
-                    >
-                        <AiOutlineClose />
-                    </motion.button>
-                </div>
-                <div className={productModalStyles.productDetails}>
-                    <ProductGallery />
-                    <ProductDetails />
-                </div>
+            <div className={productModalStyles.extraTitle} onClick={handleHighlightsClick}>
+                Highlights {isHighlightsExpanded ? <MdKeyboardArrowUp /> : <MdOutlineKeyboardArrowDown />}
             </div>
+            <motion.div initial="hidden" animate={isHighlightsExpanded ? 'visible' : 'hidden'} exit="exit" variants={expandVariants}>
+                {isHighlightsExpanded && (
+                    <div>
+                        <ul>
+                            <li>High-quality ceramic material</li>
+                            <li>Dishwasher and microwave safe</li>
+                            <li>11oz capacity</li>
+                        </ul>
+                    </div>
+                )}
+            </motion.div>
+
+            <div className={productModalStyles.extraTitle} onClick={handleDescriptionClick}>
+                Description {isDescriptionExpanded ? <MdKeyboardArrowUp /> : <MdOutlineKeyboardArrowDown />}
+            </div>
+            <motion.div initial="hidden" animate={isDescriptionExpanded ? 'visible' : 'hidden'} exit="exit" variants={expandVariants}>
+                {isDescriptionExpanded && (
+                    <div className={productModalStyles.descriptionContent}>
+                        <p>
+                            This custom-designed coffee mug features a cute cat taking a coffee break. It has an 11oz capacity and is made of high-quality ceramic material that is both dishwasher and microwave safe. The mug has a glossy white finish and is perfect for coffee lovers and cat enthusiasts alike.
+                        </p>
+                    </div>
+                )}
+            </motion.div>
+
+            <div className={productModalStyles.extraTitle} onClick={handleShippingClick}>
+                Shipping and return policies {isShippingExpanded ? <MdKeyboardArrowUp /> : <MdOutlineKeyboardArrowDown />}
+            </div>
+            <motion.div initial="hidden" animate={isShippingExpanded ? 'visible' : 'hidden'} exit="exit" variants={expandVariants}>
+                {isShippingExpanded && (
+                    <div className={productModalStyles.shippingContent}>
+                        <h3>Shipping Policy</h3>
+                        <p>
+                            We offer free shipping on all orders. Your order will be processed within 1-2 business days and will be delivered within 5-7 business days.
+                        </p>
+                        <h3>Return Policy</h3>
+                        <p>
+                            If you are not satisfied with your purchase, you may return it within 30 days for a full refund. Please contact us to initiate a return.
+                        </p>
+                    </div>
+                )}
+            </motion.div>
         </div>
     );
 
 };
 
-export default product;
+export default ProductDetails;
