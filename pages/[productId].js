@@ -6,11 +6,12 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { MdKeyboardArrowUp } from 'react-icons/md';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import productModalStyles from '../styles/productModal.module.css';
-import { AnimatePresence, motion } from 'framer-motion';
+import { LayoutGroup, motion, AnimatePresence } from "framer-motion";
 import { useRouter } from 'next/router';
 import products from '../data/products';
 import ProductGallery from '../components/ui/ProductGallery'
 import ProductDetails from '../components/ui/ProductDetails'
+
 const modalVariants = {
     hidden: {
         opacity: 0,
@@ -173,7 +174,20 @@ const product = () => {
                     </motion.button>
                 </div>
                 <div className={productModalStyles.productDetails}>
-                    <ProductGallery />
+                    <div className={productModalStyles.visual}>
+
+                        <motion.div className={productModalStyles.leftArrowColumn} onClick={prevImage} variants={arrowVariants} whileHover="hover" whileTap="tap">
+                            <AiOutlineLeft className={productModalStyles.arrowIcon} />
+                        </motion.div>
+                        <div className={productModalStyles.photo} variants={imageVariants} initial="hidden" animate="visible">
+                            <img src={product.images[currentImageIndex]} alt={product.name} />
+                        </div>
+                        <motion.div className={productModalStyles.rightArrowColumn} onClick={nextImage} variants={arrowVariants} whileHover="hover" whileTap="tap">
+                            <AiOutlineRight className={productModalStyles.arrowIcon} />
+                        </motion.div></div>
+
+
+
                     <ProductDetails />
                 </div>
             </div>

@@ -1,21 +1,25 @@
 .galleryContainer {
-  font-family: sans-serif;
+  height: 90%;
   width: 100%;
-  margin: 0 auto;
+
   display: flex;
   flex-direction: row;
-  align-items: center;
-  height: 620px;
-  overflow: hidden;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: transparent;
 }
 
 .primaryContainer {
-  height: 100% !important;
+  height: 100%;
   width: 100%;
   border-radius: 1rem;
 
   overflow: hidden;
   object-fit: contain;
+  position: relative;
 }
 
 .primaryProductImage {
