@@ -64,6 +64,7 @@ const CartProvider = ({ children }) => {
                 handleCheckout,
                 numberOfItems,
                 total,
+                setCart
             }}
         >
             {children}
@@ -82,6 +83,7 @@ const useCart = () => {
         handleCheckout,
         numberOfItems,
         total,
+        setCart
     } = useContext(CartContext);
 
     return {
@@ -94,6 +96,7 @@ const useCart = () => {
         handleCheckout,
         numberOfItems,
         total,
+        setCart
     };
 };
 

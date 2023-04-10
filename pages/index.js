@@ -21,8 +21,8 @@ export default function Home() {
       <div className={mainStyles.headerRow}>
         <div className={mainStyles.headerRowMid}>
           <div className={mainStyles.shopLogo}>
-            <img src="/images/logo.png" alt="mugculturelogo" />
-            <div>BETA</div>
+            <img src="/images/logo.png" alt="mugculturelogo" className={mainStyles.brandImage} />
+            <div className={mainStyles.betaTitle}>BETA</div>
           </div>
 
           <div >

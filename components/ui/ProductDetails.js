@@ -41,12 +41,6 @@ const ProductDetails = () => {
     const {
         cart,
         addToCart,
-        removeItem,
-        clearCart,
-        isCheckingOut,
-        proceedToCheckout,
-        handleCheckout,
-        total,
         setCart,
     } = useCart();
 
