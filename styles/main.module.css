@@ -1,5 +1,13 @@
 /* SMALL */
 @media screen and (max-width: 500px) {
+  .betaTitle {
+    color: gray;
+    transform: translateY(-15px);
+    display: flex;
+    justify-content: flex-end;
+    font-size: 13px;
+    width: 100%;
+  }
   .shopLogo img {
     width: 150px;
   }
@@ -59,6 +67,13 @@
 }
 /* MEDIUM */
 @media screen and (min-width: 501px) and (max-width: 1000px) {
+  .betaTitle {
+    color: gray;
+    transform: translateY(-20px);
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+  }
   .shopLogo {
     margin-right: auto;
     width: 300px;
@@ -116,6 +131,13 @@
 }
 /* LARGE */
 @media screen and (min-width: 1001px) {
+  .betaTitle {
+    color: gray;
+    transform: translateY(-20px);
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+  }
   .shopLogo {
     margin-right: auto;
     width: 300px;
@@ -179,11 +201,4 @@
     max-width: 1500px;
     padding-bottom: 10rem;
   }
-}
-.betaTitle {
-  color: gray;
-  transform: translateY(-20px);
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
 }

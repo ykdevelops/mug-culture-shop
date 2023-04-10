@@ -30,9 +30,8 @@
   transition: box-shadow 0.3s ease-out;
 }
 .product img {
-  width: 300px;
+  width: 250px;
   height: auto;
-  object-fit: cover;
   border-radius: 4px;
   margin-bottom: 15px;
   transition: box-shadow 0.3s ease-out;
@@ -91,7 +90,7 @@
     transition: box-shadow 0.3s ease-out;
   }
   .product img {
-    width: 400px;
+    width: 350px;
     height: auto;
     object-fit: cover;
     border-radius: 4px;
