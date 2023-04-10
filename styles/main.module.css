@@ -17,7 +17,7 @@
     justify-content: center;
   }
   .headerRowMid {
-    max-width: 1300px;
+    max-width: 1000px;
     width: 90%;
     display: flex;
     justify-content: flex-end;
@@ -36,7 +36,7 @@
     font-size: 10px;
     position: absolute;
     transform: translate(0.5rem, -1.5rem);
-    color: white;
+    color: black;
     background-color: transparent;
     width: 15px;
     height: 15px;
@@ -68,7 +68,7 @@
     justify-content: center;
   }
   .headerRowMid {
-    max-width: 1300px;
+    max-width: 1000px;
     width: 90%;
     display: flex;
     justify-content: flex-end;
@@ -87,8 +87,8 @@
     font-size: 10px;
     position: absolute;
     transform: translate(0.65rem, -1.5rem);
-    color: white;
-    background-color: green;
+    color: black;
+    background-color: transparent;
     width: 20px;
     height: 20px;
     border-radius: 50%;
@@ -120,7 +120,7 @@
     justify-content: center;
   }
   .headerRowMid {
-    max-width: 1300px;
+    max-width: 1200px;
     width: 90%;
     display: flex;
     justify-content: flex-end;

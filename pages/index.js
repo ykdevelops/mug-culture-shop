@@ -20,7 +20,11 @@ export default function Home() {
     <div className={mainStyles.homePage}>
       <div className={mainStyles.headerRow}>
         <div className={mainStyles.headerRowMid}>
-          <img src="/images/logo.png" alt="mugculturelogo" className={mainStyles.shopLogo} />
+          <div className={mainStyles.shopLogo}>
+            <img src="/images/logo.png" alt="mugculturelogo" />
+            <div>BETA</div>
+          </div>
+
           <div >
             <Link href="/cart">
               <BsBag className={mainStyles.cartIcon} />
