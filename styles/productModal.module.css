@@ -85,6 +85,8 @@
     width: 100%;
     background-color: transparent;
     margin: 1rem 0 1rem 0;
+    color: black;
+    border: black 2px solid;
   }
 
   .photo {
@@ -211,6 +213,8 @@
     width: 100%;
     background-color: transparent;
     margin: 1rem 0 1rem 0;
+    color: black;
+    border: black 2px solid;
   }
 
   .visual {
