@@ -25,7 +25,7 @@ export default function Home() {
             <div className={mainStyles.betaTitle}>BETA</div>
           </div>
 
-          <div >
+          <div className='cartIconBox'>
             <Link href="/cart">
               <BsBag className={mainStyles.cartIcon} />
             </Link>

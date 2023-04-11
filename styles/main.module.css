@@ -2,6 +2,7 @@
 @media screen and (max-width: 500px) {
   .brandImage {
     width: 200px;
+    font-family: "Raleway", sans-serif;
   }
   .betaTitle {
     color: gray;
@@ -72,6 +73,7 @@
 @media screen and (min-width: 501px) and (max-width: 1000px) {
   .brandImage {
     width: 200px;
+    font-family: "Raleway", sans-serif;
   }
   .betaTitle {
     color: gray;
@@ -139,6 +141,7 @@
 @media screen and (min-width: 1001px) {
   .brandImage {
     width: 300px;
+    font-family: "Raleway", sans-serif;
   }
   .betaTitle {
     color: gray;
