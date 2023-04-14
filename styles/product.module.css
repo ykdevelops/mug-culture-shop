@@ -118,4 +118,17 @@
     margin-bottom: 15px;
     width: 100%;
   }
+  .buttonRow {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    padding: 10px;
+    margin-top: auto;
+  }
+  .button {
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+  }
 }
