@@ -100,35 +100,56 @@
   .name {
     font-size: 1.2rem;
     color: #333;
-    padding: 10px 0px 30px 0px;
-    white-space: wrap; /* Prevent line breaks in the name */
-    overflow: hidden; /* Hide the text that overflows the container */
-    text-overflow: ellipsis; /* Add ellipsis (...) when the text overflows */
-    width: 100%; /* Set the name width to 100% */
-    height: 300px;
+    height: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* number of lines to show */
+    -webkit-box-orient: vertical;
   }
+
   .price {
     font-size: 1.5rem;
     color: #333;
-    margin-top: auto;
+    margin: 0px;
   }
-  .product p {
-    font-size: 1.1rem;
-    color: #333;
-    margin-bottom: 15px;
-    width: 100%;
-  }
+
   .buttonRow {
     display: flex;
     flex-direction: row;
     width: 100%;
     justify-content: space-between;
     padding: 10px;
-    margin-top: auto;
+    margin-top: 0px;
   }
-  .button {
+  .button1 {
     cursor: pointer;
     border: none;
     border-radius: 10px;
+  }
+  .button2 {
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+  }
+  .button1:hover {
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease-out, box-shadow 0.3s ease-out,
+      outline 0.3s ease-out;
+  }
+  .button2:hover {
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease-out, box-shadow 0.3s ease-out,
+      outline 0.3s ease-out;
+  }
+  .linkBox {
+    display: flex;
+    flex-direction: column;
   }
 }

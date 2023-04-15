@@ -4,8 +4,8 @@ import productStyles from '../../styles/product.module.css';
 import { AnimatePresence, motion } from 'framer-motion';
 import stripeLinks from '../../data/stripeLinks';
 import { useCart } from '../../context/CartContext';
-
 const ProductCard = ({ product }) => {
+    const [isHovered, setIsHovered] = useState(false);
     const {
         cart,
         addToCart,
@@ -17,7 +17,6 @@ const ProductCard = ({ product }) => {
         total,
         setCart,
     } = useCart();
-    const [isHovered, setIsHovered] = useState(false);
 
     const handleHover = () => {
         setIsHovered(true);
@@ -40,11 +39,21 @@ const ProductCard = ({ product }) => {
         hovered: {
             scale: 1.05,
             transition: {
+                duration: 0.7,
+            },
+        },
+        exit: {
+            opacity: 0,
+            transition: {
                 duration: 0.3,
             },
-            boxShadow: '0px 3px 10px rgba(0, 0, 0, 0.2)',
         },
     };
+
+
+
+
+
     const handleAddToCart = (event) => {
         event.stopPropagation();
         const existingItemIndex = cart.findIndex(
@@ -61,9 +70,7 @@ const ProductCard = ({ product }) => {
         console.log('Cart:', cart);
     };
 
-
     return (
-
         <motion.div
             className={productStyles.product}
             variants={productVariants}
@@ -78,25 +85,31 @@ const ProductCard = ({ product }) => {
                 <span className={productStyles.price}>${product.price}</span>
             </Link>
 
-            <div className={productStyles.buttonRow}>
-                <motion.button
-                    whileHover="hovered"
-                    whileTap="normal"
-                    onMouseEnter={handleHover}
-                    onMouseLeave={handleMouseLeave}
-                    variants={productVariants}
-                    className={productStyles.button}
-                    onClick={handleBuyNow}>Buy Now</motion.button>
-                <motion.button whileHover="hovered"
-                    whileTap="normal"
-                    onMouseEnter={handleHover}
-                    onMouseLeave={handleMouseLeave}
-                    variants={productVariants}
-                    className={productStyles.button} onClick={handleAddToCart}>Add to Cart</motion.button>
-            </div>
-
+            <AnimatePresence>
+                {isHovered && (
+                    <motion.div
+                        className={productStyles.buttonRow}
+                        variants={productVariants}
+                        initial="normal"
+                        animate="hovered"
+                        exit="exit"
+                    >
+                        <button
+                            className={productStyles.button1}
+                            onClick={handleBuyNow}
+                        >
+                            Buy Now
+                        </button>
+                        <button
+                            className={productStyles.button2}
+                            onClick={handleAddToCart}
+                        >
+                            Add to Cart
+                        </button>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </motion.div>
-
     );
 };
 
