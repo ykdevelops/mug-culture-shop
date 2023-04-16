@@ -3,19 +3,33 @@ import { useCart } from '../context/CartContext';
 import { MdClose } from 'react-icons/md';
 import cartStyles from '../styles/cart.module.css';
 import { useRouter } from 'next/router';
+import { loadStripe } from '@stripe/stripe-js';
 
-const cart = () => {
-    React.useEffect(() => {
-        // Check to see if this is a redirect back from Checkout
-        const query = new URLSearchParams(window.location.search);
-        if (query.get('success')) {
-            console.log('Order placed! You will receive an email confirmation.');
-        }
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
-        if (query.get('canceled')) {
-            console.log('Order canceled -- continue to shop around and checkout when you’re ready.');
-        }
-    }, []);
+const Cart = () => {
+    const { cart, isCheckingOut, proceedToCheckout, handleCheckout, clearCart, removeItem } = useCart();
+    const [userData, setUserData] = useState({});
+    const [paymentOption, setPaymentOption] = useState('paypal');
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setUserData({ ...userData, [name]: value });
+    };
+
+    const handlePaymentOptionChange = (event) => {
+        setPaymentOption(event.target.value);
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        handleCheckout(userData, paymentOption);
+    };
+
+    const total = cart.reduce((acc, item) => {
+        return acc + item.product.price * item.quantity;
+    }, 0);
+
+    const router = useRouter();
 
     const redirectToCheckout = async () => {
         const stripe = await stripePromise;
@@ -52,27 +66,7 @@ const cart = () => {
             console.error('Error redirecting to checkout:', result.error.message);
         }
     };
-    const { cart, isCheckingOut, proceedToCheckout, handleCheckout, clearCart, removeItem } = useCart();
-    const [userData, setUserData] = useState({});
-    const [paymentOption, setPaymentOption] = useState('paypal');
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setUserData({ ...userData, [name]: value });
-    };
 
-    const handlePaymentOptionChange = (event) => {
-        setPaymentOption(event.target.value);
-    };
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        handleCheckout(userData, paymentOption);
-    };
-
-    const total = cart.reduce((acc, item) => {
-        return acc + item.product.price * item.quantity;
-    }, 0);
-    const router = useRouter();
     return (
         <div className={cartStyles.cart}>
             <div className={cartStyles.cartContainer}>
@@ -99,7 +93,6 @@ const cart = () => {
                         {/* <button className={cartStyles.checkoutButton} onClick={redirectToCheckout}>
                             Proceed to Checkout
                         </button> */}
-
                     </>
                 )}
             </div>
@@ -107,4 +100,4 @@ const cart = () => {
     );
 };
 
-export default cart;
+export default Cart;

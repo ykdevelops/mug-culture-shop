@@ -5,15 +5,13 @@ export default async function handler(req, res) {
     try {
       // Create Checkout Sessions from body params.
       const session = await stripe.checkout.sessions.create({
+        // I NEED TO GRAB THE CART ITEMS AND MAKE AN ARRAY 
+        // Feed the array to this file "checkout_sessions.js"
+        // line_items: [array content]
         line_items: [
           {
-            price_data: {
-              currency: 'usd',
-              product_data: {
-                name: 'Your Product Name',
-              },
-              unit_amount: 2000, // Set the fixed price to 20 USD (amounts are in cents)
-            },
+            // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+            price: '{{price_1MsJzrHDumko88rUUZdwtZRe}}',
             quantity: 1,
           },
         ],

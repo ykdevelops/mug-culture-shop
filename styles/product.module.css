@@ -125,12 +125,16 @@
   .button1 {
     cursor: pointer;
     border: none;
-    border-radius: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease-out, box-shadow 0.3s ease-out,
+      outline 0.3s ease-out;
   }
   .button2 {
     cursor: pointer;
     border: none;
-    border-radius: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease-out, box-shadow 0.3s ease-out,
+      outline 0.3s ease-out;
   }
   .button1:hover {
     cursor: pointer;
