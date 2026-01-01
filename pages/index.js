@@ -21,26 +21,34 @@ export default function Home() {
       <div className={mainStyles.headerRow}>
         <div className={mainStyles.headerRowMid}>
           <div className={mainStyles.shopLogo}>
-            <img src="/images/logo3.png" alt="mugculturelogo" className={mainStyles.brandImage} />
+            <img src="/mugcultureIcon.svg" alt="MugCulture" className={mainStyles.brandImage} />
             <div className={mainStyles.betaTitle}>BETA</div>
           </div>
 
-          <div className='cartIconBox'>
+          <div className={mainStyles.cartIconBox}>
             <Link href="/cart">
               <BsBag className={mainStyles.cartIcon} />
             </Link>
-            <span className={mainStyles.cartCount}>{numberOfItems}</span>
           </div>
         </div>
       </div>
-      <div className={mainStyles.products}>
+
+      <section className={mainStyles.hero}>
+        <div className={mainStyles.heroInner}>
+          <h1 className={mainStyles.heroTitle}>
+            <span className={mainStyles.heroTitleStrong}>Mugs. </span>
+            <span className={mainStyles.heroTitleMuted}>
+              Essentials that pair perfectly with your favourite moments.
+            </span>
+          </h1>
+        </div>
+      </section>
+
+      <section className={mainStyles.products}>
         {products.map((product) => (
-
-          <ProductCard key={product.id} product={product} >
-          </ProductCard>
-
+          <ProductCard key={product.id} product={product} />
         ))}
-      </div>
+      </section>
 
 
     </div>

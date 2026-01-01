@@ -37,15 +37,18 @@ const ProductCard = ({ product }) => {
             scale: 1,
         },
         hovered: {
-            scale: 1.05,
+            scale: 1.02,
             transition: {
-                duration: 0.7,
+                type: "spring",
+                stiffness: 300,
+                damping: 20,
             },
         },
         exit: {
             opacity: 0,
             transition: {
-                duration: 0.3,
+                duration: 0.2,
+                ease: [0.4, 0, 0.2, 1],
             },
         },
     };
@@ -81,34 +84,16 @@ const ProductCard = ({ product }) => {
         >
             <Link href={`/${product.id}`} className={productStyles.linkBox}>
                 <img src={product.thumbnail} alt={product.name} />
-                <span className={productStyles.name}>{product.name}</span>
-                <span className={productStyles.price}>${product.price}</span>
+                <div className={productStyles.info}>
+                    <h3 className={productStyles.name}>{product.name}</h3>
+                    {product.subtitle && (
+                        <p className={productStyles.subtitle}>{product.subtitle}</p>
+                    )}
+                    <span className={productStyles.price}>${product.price}</span>
+                </div>
             </Link>
 
-            <AnimatePresence>
-                {isHovered && (
-                    <motion.div
-                        className={productStyles.buttonRow}
-                        variants={productVariants}
-                        initial="normal"
-                        animate="hovered"
-                        exit="exit"
-                    >
-                        <button
-                            className={productStyles.button1}
-                            onClick={handleBuyNow}
-                        >
-                            Buy Now
-                        </button>
-                        <button
-                            className={productStyles.button2}
-                            onClick={handleAddToCart}
-                        >
-                            Add to Cart
-                        </button>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+           
         </motion.div>
     );
 };

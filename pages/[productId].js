@@ -15,22 +15,23 @@ import ProductDetails from '../components/ui/ProductDetails'
 const modalVariants = {
     hidden: {
         opacity: 0,
-        x: '-100vw',
+        scale: 0.95,
     },
     visible: {
         opacity: 1,
-        x: 0,
+        scale: 1,
         transition: {
             type: 'spring',
-            stiffness: 150,
-            damping: 10,
+            stiffness: 300,
+            damping: 30,
         },
     },
     exit: {
         opacity: 0,
-        x: '-100vw',
+        scale: 0.95,
         transition: {
-            ease: 'easeInOut',
+            duration: 0.2,
+            ease: [0.4, 0, 0.2, 1],
         },
     },
 };

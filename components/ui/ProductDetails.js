@@ -34,9 +34,12 @@ const modalVariants = {
 };
 
 const ProductDetails = () => {
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const router = useRouter();
+    const { productId } = router.query;
+    const product = products.find((product) => product.id === parseInt(productId));
+    
     const [isHighlightsExpanded, setIsHighlightsExpanded] = useState(false);
-    const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+    const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(true); // Expanded by default
     const [isShippingExpanded, setIsShippingExpanded] = useState(false);
     const {
         cart,
@@ -44,20 +47,10 @@ const ProductDetails = () => {
         setCart,
     } = useCart();
 
-    const prevImage = () => {
-        setCurrentImageIndex((prevIndex) =>
-            prevIndex > 0 ? prevIndex - 1 : product.images.length - 1
-        );
-    };
-
-    const nextImage = () => {
-        setCurrentImageIndex((prevIndex) =>
-            (prevIndex + 1) % product.images.length
-        );
-    };
-
     const handleAddToCart = (event) => {
         event.stopPropagation();
+        if (!product) return;
+        
         const existingItemIndex = cart.findIndex(
             (item) => item.product.id === product.id
         );
@@ -68,15 +61,6 @@ const ProductDetails = () => {
         } else {
             addToCart(product, 1);
         }
-
-        console.log('Cart:', cart);
-        router.back();
-    };
-
-    const handleCloseModal = (event) => {
-        event.stopPropagation();
-        console.log('close button triggered');
-        closeModal();
     };
 
     const handleHighlightsClick = () => {
@@ -114,22 +98,38 @@ const ProductDetails = () => {
 
     const buttonVariants = {
         hover: {
-            scale: 1.1,
+            scale: 1.02,
+            transition: {
+                type: "spring",
+                stiffness: 400,
+                damping: 17,
+            },
         },
         pressed: {
-            scale: 0.5,
+            scale: 0.98,
+            transition: {
+                duration: 0.1,
+            },
         },
         rest: {
             scale: 1,
         },
     };
     const expandVariants = {
-        hidden: { height: 0, opacity: 0 },
+        hidden: { 
+            height: 0, 
+            opacity: 0,
+            transition: {
+                duration: 0.3,
+                ease: [0.4, 0, 0.2, 1],
+            },
+        },
         visible: {
             height: 'auto',
             opacity: 1,
             transition: {
                 duration: 0.3,
+                ease: [0.4, 0, 0.2, 1],
             },
         },
         exit: {
@@ -137,18 +137,25 @@ const ProductDetails = () => {
             opacity: 0,
             transition: {
                 duration: 0.3,
+                ease: [0.4, 0, 0.2, 1],
             },
         },
     };
-    const router = useRouter();
-    const { productId } = router.query;
-    const product = products.find((product) => product.id === parseInt(productId));
+
+    if (!product) return null;
 
     return (
         <div className={productModalStyles.description}>
-            <h2>{product.name}</h2>
-            <p>${product.price}</p>
-            <p>Custom Designed Ceramic Coffee Mug | Cat, Coffee Break | 11oz Gloss White Mug </p>
+            <div className={productModalStyles.headerSection}>
+                <h2 className={productModalStyles.productTitle}>{product.name}</h2>
+                {product.subtitle && (
+                    <p className={productModalStyles.productSubtitle}>{product.subtitle}</p>
+                )}
+                <div className={productModalStyles.priceSection}>
+                    <span className={productModalStyles.price}>${product.price}</span>
+                </div>
+            </div>
+
             <motion.button
                 initial="rest"
                 whileHover="hover"
@@ -156,53 +163,104 @@ const ProductDetails = () => {
                 variants={buttonVariants}
                 onClick={handleAddToCart}
                 className={productModalStyles.addToCart}
-            >Add to Cart</motion.button>
+            >
+                Add to Cart
+            </motion.button>
 
-            <div className={productModalStyles.extraTitle} onClick={handleHighlightsClick}>
-                Highlights {isHighlightsExpanded ? <MdKeyboardArrowUp /> : <MdOutlineKeyboardArrowDown />}
-            </div>
-            <motion.div initial="hidden" animate={isHighlightsExpanded ? 'visible' : 'hidden'} exit="exit" variants={expandVariants}>
-                {isHighlightsExpanded && (
-                    <div>
-                        <ul>
-                            <li>High-quality ceramic material</li>
-                            <li>Dishwasher and microwave safe</li>
-                            <li>11oz capacity</li>
-                        </ul>
-                    </div>
-                )}
-            </motion.div>
+            <div className={productModalStyles.accordionSection}>
+                <motion.div 
+                    className={productModalStyles.extraTitle} 
+                    onClick={handleDescriptionClick}
+                    whileHover={{ opacity: 0.7 }}
+                >
+                    <span>Description</span>
+                    <motion.span
+                        animate={{ rotate: isDescriptionExpanded ? 180 : 0 }}
+                        transition={{ duration: 0.3 }}
+                    >
+                        <MdOutlineKeyboardArrowDown />
+                    </motion.span>
+                </motion.div>
+                <AnimatePresence>
+                    {isDescriptionExpanded && (
+                        <motion.div 
+                            initial="hidden" 
+                            animate="visible" 
+                            exit="exit" 
+                            variants={expandVariants}
+                        >
+                            <div className={productModalStyles.descriptionContent}>
+                                <p>{product.description || 'A beautifully crafted ceramic mug designed to enhance your daily coffee experience.'}</p>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
 
-            <div className={productModalStyles.extraTitle} onClick={handleDescriptionClick}>
-                Description {isDescriptionExpanded ? <MdKeyboardArrowUp /> : <MdOutlineKeyboardArrowDown />}
-            </div>
-            <motion.div initial="hidden" animate={isDescriptionExpanded ? 'visible' : 'hidden'} exit="exit" variants={expandVariants}>
-                {isDescriptionExpanded && (
-                    <div className={productModalStyles.descriptionContent}>
-                        <p>
-                            This custom-designed coffee mug features a cute cat taking a coffee break. It has an 11oz capacity and is made of high-quality ceramic material that is both dishwasher and microwave safe. The mug has a glossy white finish and is perfect for coffee lovers and cat enthusiasts alike.
-                        </p>
-                    </div>
-                )}
-            </motion.div>
+                <motion.div 
+                    className={productModalStyles.extraTitle} 
+                    onClick={handleHighlightsClick}
+                    whileHover={{ opacity: 0.7 }}
+                >
+                    <span>Highlights</span>
+                    <motion.span
+                        animate={{ rotate: isHighlightsExpanded ? 180 : 0 }}
+                        transition={{ duration: 0.3 }}
+                    >
+                        <MdOutlineKeyboardArrowDown />
+                    </motion.span>
+                </motion.div>
+                <AnimatePresence>
+                    {isHighlightsExpanded && (
+                        <motion.div 
+                            initial="hidden" 
+                            animate="visible" 
+                            exit="exit" 
+                            variants={expandVariants}
+                        >
+                            <ul className={productModalStyles.highlightsList}>
+                                {(product.highlights || []).map((highlight, index) => (
+                                    <li key={index}>{highlight}</li>
+                                ))}
+                            </ul>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
 
-            <div className={productModalStyles.extraTitle} onClick={handleShippingClick}>
-                Shipping and return policies {isShippingExpanded ? <MdKeyboardArrowUp /> : <MdOutlineKeyboardArrowDown />}
+                <motion.div 
+                    className={productModalStyles.extraTitle} 
+                    onClick={handleShippingClick}
+                    whileHover={{ opacity: 0.7 }}
+                >
+                    <span>Shipping & Returns</span>
+                    <motion.span
+                        animate={{ rotate: isShippingExpanded ? 180 : 0 }}
+                        transition={{ duration: 0.3 }}
+                    >
+                        <MdOutlineKeyboardArrowDown />
+                    </motion.span>
+                </motion.div>
+                <AnimatePresence>
+                    {isShippingExpanded && (
+                        <motion.div 
+                            initial="hidden" 
+                            animate="visible" 
+                            exit="exit" 
+                            variants={expandVariants}
+                        >
+                            <div className={productModalStyles.shippingContent}>
+                                <h4>Shipping Policy</h4>
+                                <p>
+                                    We offer free shipping on all orders. Your order will be processed within 1-2 business days and will be delivered within 5-7 business days.
+                                </p>
+                                <h4>Return Policy</h4>
+                                <p>
+                                    If you are not satisfied with your purchase, you may return it within 30 days for a full refund. Please contact us to initiate a return.
+                                </p>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </div>
-            <motion.div initial="hidden" animate={isShippingExpanded ? 'visible' : 'hidden'} exit="exit" variants={expandVariants}>
-                {isShippingExpanded && (
-                    <div className={productModalStyles.shippingContent}>
-                        <h3>Shipping Policy</h3>
-                        <p>
-                            We offer free shipping on all orders. Your order will be processed within 1-2 business days and will be delivered within 5-7 business days.
-                        </p>
-                        <h3>Return Policy</h3>
-                        <p>
-                            If you are not satisfied with your purchase, you may return it within 30 days for a full refund. Please contact us to initiate a return.
-                        </p>
-                    </div>
-                )}
-            </motion.div>
         </div>
     );
 

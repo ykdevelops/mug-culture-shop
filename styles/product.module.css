@@ -1,159 +1,197 @@
 .product {
+  --card-pad: 24px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  background-color: transparent;
-  padding: 20px;
-  margin: 10px;
-  border-radius: 4px;
+  background-color: var(--color-bg-secondary);
+  position: relative;
+  margin: 0;
   order: 1;
-  width: 300px;
-  height: 400px; /* Set a fixed height */
-  box-shadow: 0;
-  transition: background-color 0.3s ease-out, box-shadow 0.3s ease-out,
-    outline 0.3s ease-out;
-  overflow: hidden; /* Prevent content from overflowing the container */
+  width: 320px;
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  min-height: auto;
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.08);
+  transition: all var(--transition-base);
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .product:hover {
-  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
-  background-color: #fff;
+  transform: translateY(-2px);
 }
+
 .product:focus {
-  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
-  background-color: #fff;
-  outline: dotted 2px #ccc;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  background-color: var(--color-bg-secondary);
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
-.product:focus-within img {
-  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease-out;
-}
+
 .product img {
-  width: 250px;
+  width: 100%;
   height: auto;
-  border-radius: 4px;
-  margin-bottom: 15px;
-  transition: box-shadow 0.3s ease-out;
+ 
+  transition: transform var(--transition-base);
+  object-fit: cover;
+  display: block;
+  aspect-ratio: 4 / 3;
 }
+
+.product:hover img {
+  transform: scale(1.01);
+}
+
+.info {
+  width: 100%;
+  padding: 14px 16px 18px;
+}
+
 .name {
-  font-size: 1rem;
-  color: #333;
-  padding: 10px 0px 30px 0px;
-  white-space: wrap; /* Prevent line breaks in the name */
-  overflow: hidden; /* Hide the text that overflows the container */
-  text-overflow: ellipsis; /* Add ellipsis (...) when the text overflows */
-  width: 100%; /* Set the name width to 100% */
-  height: 300px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 6px;
+  line-height: 1.25;
+  letter-spacing: 0.08em;
+  width: 100%;
+  text-transform: uppercase;
 }
-.price {
-  font-size: 1.5rem;
-  color: #333;
-  margin-top: auto;
-}
-.product p {
-  font-size: 1.1rem;
-  color: #333;
-  margin-bottom: 15px;
+
+.subtitle {
+  font-size: 12px;
+  color: #6e6e73;
+  margin-bottom: 10px;
+  line-height: 1.3;
   width: 100%;
 }
-@media screen and (min-width: 1001px) {
+
+.price {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  padding-bottom: 10px;
+  margin-top: 8px;
+  letter-spacing: -0.022em;
+}
+
+.buttonRow {
+  position: absolute;
+  left: var(--card-pad);
+  right: var(--card-pad);
+  bottom: var(--card-pad);
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  gap: 10px;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity var(--transition-base), transform var(--transition-base);
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.product:hover .buttonRow,
+.product:focus-within .buttonRow {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.quickAddLabel {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #1d1d1f;
+  opacity: 0.9;
+}
+
+.buttonRowActions {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  width: 100%;
+}
+
+.button1 {
+  flex: 1;
+  cursor: pointer;
+  border: 2px solid var(--color-primary);
+  background-color: var(--color-primary);
+  color: white;
+  border-radius: var(--radius-xl);
+  padding: 10px 14px;
+  font-weight: 400;
+  font-size: 13px;
+  min-height: 40px;
+  transition: all var(--transition-base);
+}
+
+.button1:hover {
+  background-color: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+  transform: scale(1.01);
+}
+
+.button2 {
+  flex: 1;
+  cursor: pointer;
+  border: 2px solid var(--color-text-primary);
+  background-color: transparent;
+  color: var(--color-text-primary);
+  border-radius: var(--radius-xl);
+  padding: 10px 14px;
+  font-weight: 400;
+  font-size: 13px;
+  min-height: 40px;
+  transition: all var(--transition-base);
+}
+
+.button2:hover {
+  background-color: var(--color-bg-tertiary);
+  border-color: var(--color-text-primary);
+  transform: scale(1.01);
+}
+
+.product p {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-md);
+  width: 100%;
+  line-height: 1.5;
+}
+@media screen and (min-width: 834px) and (max-width: 1023px) {
   .product {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    background-color: transparent;
-    padding: 20px;
-    margin: 10px;
-    border-radius: 4px;
-    order: 1;
-    width: 400px;
-    height: 500px; /* Set a fixed height */
-    box-shadow: 0;
-    transition: background-color 0.3s ease-out, box-shadow 0.3s ease-out,
-      outline 0.3s ease-out;
-    overflow: hidden; /* Prevent content from overflowing the container */
+    width: 340px;
+    --card-pad: 24px;
   }
 
-  .product:hover {
-    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-  }
-  .product:focus {
-    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    outline: dotted 2px #ccc;
-  }
-  .product:focus-within img {
-    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease-out;
-  }
   .product img {
-    width: 350px;
-    height: auto;
-    object-fit: cover;
-    border-radius: 4px;
-    margin-bottom: 15px;
-    transition: box-shadow 0.3s ease-out;
-  }
-  .name {
-    font-size: 1.2rem;
-    color: #333;
-    height: 80px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 4; /* number of lines to show */
-    -webkit-box-orient: vertical;
+    margin-bottom: var(--spacing-2xl);
   }
 
-  .price {
-    font-size: 1.5rem;
-    color: #333;
-    margin: 0px;
-  }
+  /* keep the compact "catalog card" typography on tablet too */
+}
 
-  .buttonRow {
-    display: flex;
-    flex-direction: row;
+@media screen and (min-width: 1024px) {
+  .product img {
     width: 100%;
-    justify-content: space-between;
-    padding: 10px;
-    margin-top: 0px;
+    margin-bottom: 30px;
+    max-height: 420px;
+    object-fit: cover;
   }
-  .button1 {
-    cursor: pointer;
-    border: none;
-    border-radius: 4px;
-    transition: background-color 0.3s ease-out, box-shadow 0.3s ease-out,
-      outline 0.3s ease-out;
-  }
-  .button2 {
-    cursor: pointer;
-    border: none;
-    border-radius: 4px;
-    transition: background-color 0.3s ease-out, box-shadow 0.3s ease-out,
-      outline 0.3s ease-out;
-  }
-  .button1:hover {
-    cursor: pointer;
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease-out, box-shadow 0.3s ease-out,
-      outline 0.3s ease-out;
-  }
-  .button2:hover {
-    cursor: pointer;
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease-out, box-shadow 0.3s ease-out,
-      outline 0.3s ease-out;
-  }
+
+  /* keep the compact "catalog card" typography on desktop too */
+
   .linkBox {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    cursor: pointer;
   }
 }
