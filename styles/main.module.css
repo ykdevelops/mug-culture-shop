@@ -86,7 +86,7 @@
   scroll-snap-type: x mandatory;
   scrollbar-width: none; /* Firefox */
   --card-width: 320px;
-  --row-end-space: max(16px, calc(50vw - (var(--card-width) / 2)));
+  --row-end-space: max(16px, calc(50vw - (var(--card-width) * 0.5)));
   scroll-padding-right: var(--row-end-space);
 }
 
@@ -103,6 +103,13 @@
 @media screen and (max-width: 833px) {
   .heroInner {
     padding: 36px 16px 18px;
+  }
+
+  .heroTitleMuted {
+    font-size: 28px;
+    line-height: 1.2;
+    margin-left: 0;
+    display: block;
   }
 
   .brandImage {
@@ -167,7 +174,7 @@
   }
   /* cartCount removed */
   .products {
-    --card-width: 320px;
+    --card-width: min(320px, calc(100vw - 32px));
     gap: var(--spacing-xl);
     width: 100%;
     padding: var(--spacing-3xl) 16px var(--spacing-4xl);
@@ -243,6 +250,20 @@
     padding: var(--spacing-4xl) 22px var(--spacing-5xl);
     scroll-padding-left: 22px;
     margin: 0;
+  }
+}
+
+/* WIDE-TABLET / SMALL-DESKTOP: give the hero + carousel more left gutter */
+@media screen and (min-width: 834px) and (max-width: 1089px) {
+  .heroInner {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .products {
+    padding-left: 32px;
+    padding-right: 22px;
+    scroll-padding-left: 32px;
   }
 }
 /* LARGE - Apple uses 1024px and above */
