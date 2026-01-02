@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useCart } from '../../context/CartContext';
 import { AiOutlineLeft } from 'react-icons/ai';
 import { AiOutlineRight } from 'react-icons/ai';
@@ -41,6 +41,10 @@ const ProductDetails = () => {
     const [isHighlightsExpanded, setIsHighlightsExpanded] = useState(false);
     const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(true); // Expanded by default
     const [isShippingExpanded, setIsShippingExpanded] = useState(false);
+    const [justAdded, setJustAdded] = useState(false);
+    const [quantity, setQuantity] = useState(1);
+    const resetAddedTimerRef = useRef(null);
+    const redirectHomeTimerRef = useRef(null);
     const {
         cart,
         addToCart,
@@ -50,18 +54,47 @@ const ProductDetails = () => {
     const handleAddToCart = (event) => {
         event.stopPropagation();
         if (!product) return;
+        if (!quantity || quantity < 1) return;
         
         const existingItemIndex = cart.findIndex(
             (item) => item.product.id === product.id
         );
         if (existingItemIndex !== -1) {
             const updatedCart = [...cart];
-            updatedCart[existingItemIndex].quantity += 1;
+            updatedCart[existingItemIndex].quantity += quantity;
             setCart(updatedCart);
         } else {
-            addToCart(product, 1);
+            addToCart(product, quantity);
         }
+
+        setJustAdded(true);
+        if (resetAddedTimerRef.current) {
+            clearTimeout(resetAddedTimerRef.current);
+        }
+        if (redirectHomeTimerRef.current) {
+            clearTimeout(redirectHomeTimerRef.current);
+        }
+        resetAddedTimerRef.current = setTimeout(() => {
+            setJustAdded(false);
+            resetAddedTimerRef.current = null;
+        }, 3000);
+
+        redirectHomeTimerRef.current = setTimeout(() => {
+            redirectHomeTimerRef.current = null;
+            router.push('/');
+        }, 3000);
     };
+
+    useEffect(() => {
+        return () => {
+            if (resetAddedTimerRef.current) {
+                clearTimeout(resetAddedTimerRef.current);
+            }
+            if (redirectHomeTimerRef.current) {
+                clearTimeout(redirectHomeTimerRef.current);
+            }
+        };
+    }, []);
 
     const handleHighlightsClick = () => {
         setIsHighlightsExpanded(!isHighlightsExpanded);
@@ -154,17 +187,53 @@ const ProductDetails = () => {
                 <div className={productModalStyles.priceSection}>
                     <span className={productModalStyles.price}>${product.price}</span>
                 </div>
+
+                <div className={productModalStyles.qtyRow}>
+                    <div className={productModalStyles.qtyLabel}>Quantity</div>
+                    <div className={productModalStyles.qtyControl}>
+                        <button
+                            type="button"
+                            className={productModalStyles.qtyBtn}
+                            onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                            aria-label="Decrease quantity"
+                        >
+                            –
+                        </button>
+                        <input
+                            className={productModalStyles.qtyInput}
+                            type="number"
+                            min={1}
+                            max={99}
+                            value={quantity}
+                            onChange={(e) => {
+                                const next = Number(e.target.value);
+                                if (Number.isNaN(next)) return;
+                                setQuantity(Math.min(99, Math.max(1, next)));
+                            }}
+                            aria-label="Quantity"
+                        />
+                        <button
+                            type="button"
+                            className={productModalStyles.qtyBtn}
+                            onClick={() => setQuantity((q) => Math.min(99, q + 1))}
+                            aria-label="Increase quantity"
+                        >
+                            +
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <motion.button
                 initial="rest"
-                whileHover="hover"
-                whileTap="pressed"
+                whileHover={justAdded ? undefined : "hover"}
+                whileTap={justAdded ? undefined : "pressed"}
                 variants={buttonVariants}
                 onClick={handleAddToCart}
-                className={productModalStyles.addToCart}
+                className={`${productModalStyles.addToCart} ${justAdded ? productModalStyles.addToCartAdded : ''}`}
+                disabled={justAdded}
             >
-                Add to Cart
+                {justAdded ? 'Added to Cart' : 'Add to Cart'}
             </motion.button>
 
             <div className={productModalStyles.accordionSection}>

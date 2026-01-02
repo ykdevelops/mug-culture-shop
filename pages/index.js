@@ -29,6 +29,11 @@ export default function Home() {
             <Link href="/cart">
               <BsBag className={mainStyles.cartIcon} />
             </Link>
+            {numberOfItems > 0 && (
+              <span className={mainStyles.cartCount} aria-label={`${numberOfItems} items in cart`}>
+                {numberOfItems}
+              </span>
+            )}
           </div>
         </div>
       </div>

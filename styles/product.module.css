@@ -2,7 +2,7 @@
   --card-pad: 24px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
   justify-content: flex-start;
   background-color: var(--color-bg-secondary);
   position: relative;
@@ -11,7 +11,7 @@
   width: min(320px, calc(100vw - 32px));
   flex: 0 0 auto;
   scroll-snap-align: start;
-  min-height: auto;
+  min-height: 380px;
   box-shadow: 0 2px 14px rgba(0, 0, 0, 0.08);
   transition: all var(--transition-base);
   overflow: hidden;
@@ -37,19 +37,32 @@
   object-fit: cover;
   display: block;
   aspect-ratio: 4 / 3;
+  margin-bottom: 0;
 }
 
 .product:hover img {
   transform: scale(1.01);
 }
 
+.linkBox {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  cursor: pointer;
+}
+
 .info {
   width: 100%;
   padding: 14px 16px 18px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .name {
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--color-text-primary);
   margin-bottom: 6px;
@@ -71,8 +84,7 @@
   font-size: 14px;
   font-weight: 600;
   color: var(--color-text-primary);
-  padding-bottom: 10px;
-  margin-top: 8px;
+  margin-top: auto;
   letter-spacing: -0.022em;
 }
 
@@ -169,29 +181,33 @@
   .product {
     width: 340px;
     --card-pad: 24px;
+    min-height: 420px;
   }
 
-  .product img {
-    margin-bottom: var(--spacing-2xl);
-  }
+  /* image margin handled globally */
 
   /* keep the compact "catalog card" typography on tablet too */
+  .name {
+    font-size: 17px;
+  }
 }
 
 @media screen and (min-width: 1024px) {
+  .product {
+    min-height: 420px;
+  }
+
   .product img {
     width: 100%;
-    margin-bottom: 30px;
+    margin-bottom: 0;
     max-height: 420px;
     object-fit: cover;
   }
 
   /* keep the compact "catalog card" typography on desktop too */
-
-  .linkBox {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    cursor: pointer;
+  .name {
+    font-size: 17px;
   }
+
+  /* linkBox is defined globally */
 }

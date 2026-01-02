@@ -3,24 +3,33 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
-      // Create Checkout Sessions from body params.
-      const session = await stripe.checkout.sessions.create({
-        // I NEED TO GRAB THE CART ITEMS AND MAKE AN ARRAY 
-        // Feed the array to this file "checkout_sessions.js"
-        // line_items: [array content]
-        line_items: [
-          {
-            // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-            price: '{{price_1MsJzrHDumko88rUUZdwtZRe}}',
-            quantity: 1,
+      const { items } = req.body || {};
+      if (!Array.isArray(items) || items.length === 0) {
+        return res.status(400).json({ error: { message: 'No items provided.' } });
+      }
+
+      const origin = req.headers.origin;
+      const line_items = items.map((item) => ({
+        price_data: {
+          currency: 'usd',
+          product_data: {
+            name: item.name,
+            images: item.thumbnail ? [item.thumbnail] : undefined,
           },
-        ],
+          unit_amount: item.unit_amount,
+        },
+        quantity: item.quantity,
+      }));
+
+      const session = await stripe.checkout.sessions.create({
+        line_items,
         mode: 'payment',
-        success_url: `${req.headers.origin}/?success=true`,
-        cancel_url: `${req.headers.origin}/?canceled=true`,
+        success_url: `${origin}/?success=true`,
+        cancel_url: `${origin}/cart`,
         automatic_tax: { enabled: true },
       });
-      res.redirect(303, session.url);
+
+      return res.status(200).json({ sessionId: session.id });
     } catch (err) {
       res.status(err.statusCode || 500).json(err.message);
     }
